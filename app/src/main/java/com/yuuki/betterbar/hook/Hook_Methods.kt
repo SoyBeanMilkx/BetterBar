@@ -21,7 +21,7 @@ import java.util.Calendar
 class Hook_Methods {
     fun hide_wifi(lpparam: XC_LoadPackage.LoadPackageParam) {
         XposedHelpers.findAndHookMethod(
-            "com.android.systemui.statusbar.StatusBarWifiView",  // 类名
+            "com.android.systemui.statusbar.StatusBarWifiView",
             lpparam.classLoader,
             "applyWifiState",
             XposedHelpers.findClass(
@@ -39,7 +39,7 @@ class Hook_Methods {
 
     fun hide_mobile(lpparam: XC_LoadPackage.LoadPackageParam) {
         XposedHelpers.findAndHookMethod(
-            "com.android.systemui.statusbar.StatusBarMobileView",  // 类名
+            "com.android.systemui.statusbar.StatusBarMobileView", 
             lpparam.classLoader,
             "applyMobileState",
             XposedHelpers.findClass(
@@ -109,7 +109,7 @@ class Hook_Methods {
             "com.flyme.statusbar.connectionRateView.ConnectionRateView",
             lpparam.classLoader,
             "updateConnectionRate",
-            Double::class.javaPrimitiveType, // 确保方法参数类型匹配
+            Double::class.javaPrimitiveType, 
             object : XC_MethodHook() {
                 @Throws(Throwable::class)
 
@@ -142,7 +142,7 @@ class Hook_Methods {
 
     fun hide_icon(lpparam: XC_LoadPackage.LoadPackageParam, slot: String) {
         XposedHelpers.findAndHookMethod(
-            "com.android.systemui.statusbar.phone.StatusBarIconControllerImpl",  // 类名
+            "com.android.systemui.statusbar.phone.StatusBarIconControllerImpl", 
             lpparam.classLoader,
             "setIconVisibility",
             String::class.java,
@@ -177,7 +177,7 @@ class Hook_Methods {
 
         XposedHelpers.findAndHookMethod(
             clockClass,
-            "getSmallTime", // 目标方法名
+            "getSmallTime", 
             object : XC_MethodHook() {
                 override fun afterHookedMethod(param: MethodHookParam) {
                     val calendar = Calendar.getInstance()
@@ -198,7 +198,6 @@ class Hook_Methods {
         val TAG = "ConnectionRateEnhanceHook"
         val TEXT_VIEW_TAG_ID = 0x12345678
 
-        // Hook ConnectionRateView 的 onAttachedToWindow 方法
         XposedHelpers.findAndHookMethod(
             "com.flyme.statusbar.connectionRateView.ConnectionRateView",
             lpparam.classLoader,
@@ -212,24 +211,20 @@ class Hook_Methods {
                     // 避免重复添加
                     if (parent.findViewWithTag<TextView>(TEXT_VIEW_TAG_ID) != null) return
 
-                    // 创建并插入 TextView
                     val customTextView = createCustomTextView(context)
                     customTextView.tag = TEXT_VIEW_TAG_ID // 标记已添加
                     val index = parent.indexOfChild(connectionRateView)
                     parent.addView(customTextView, index + 1) // 在左侧插入
 
-                    // 同步初始颜色
                     val currentColor = XposedHelpers.getIntField(connectionRateView, "mCurrentColor") as Int
                     customTextView.setTextColor(currentColor)
 
-                    // 开始更新数据
                     updateTextView(customTextView, text)
 
                 }
             }
         )
 
-        // Hook onDarkChanged 以同步颜色（备用）
         XposedHelpers.findAndHookMethod(
             "com.flyme.statusbar.connectionRateView.ConnectionRateView",
             lpparam.classLoader,
@@ -276,12 +271,11 @@ class Hook_Methods {
     }
 
 
-    // 创建自定义 TextView
     fun createCustomTextView(context: Context): TextView {
         val textView = TextView(context)
         val lp = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.MATCH_PARENT // 高度与父容器一致
+            LinearLayout.LayoutParams.MATCH_PARENT
         )
         textView.layoutParams = lp
         textView.textSize = 12f
