@@ -48,14 +48,14 @@ fun MainContent(xp_text: String, xp_color: Color, refreshSystemui: () -> Unit = 
             )
         },
         floatingActionButton = {
-            var showDialog by remember { mutableStateOf(false) } // 控制弹窗显示状态
+            var showDialog by remember { mutableStateOf(false) }
             Box(
                 modifier = Modifier
-                    .size(80.dp, 56.dp) // 设置 FAB 的大小
+                    .size(80.dp, 56.dp)
                     .shadow(elevation = 8.dp, shape = RoundedCornerShape(12.dp))
-                    .clip(RoundedCornerShape(12.dp)) // 剪裁到圆角形状
-                    .background(color = MaterialTheme.colorScheme.primary) // 设置背景颜色
-                    .combinedClickable( // 添加点击和长按功能
+                    .clip(RoundedCornerShape(12.dp)) 
+                    .background(color = MaterialTheme.colorScheme.primary)
+                    .combinedClickable( 
                         onClick = {
                             showDialog = true
                         },
@@ -219,7 +219,7 @@ fun SettingRow(
             checked = checkedState.value,
             onCheckedChange = { newValue ->
                 checkedState.value = newValue
-                prefs.putBoolean(key, newValue) // 直接更新 SharedPreferences
+                prefs.putBoolean(key, newValue) /
             },
             modifier = Modifier.scale(0.8f)
         )
@@ -235,7 +235,7 @@ fun is_Xposed(modifier: Modifier, text: String, color: Color) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(), // 让 Row 填充 Card 的整个高度
+                .fillMaxHeight(), 
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -243,9 +243,9 @@ fun is_Xposed(modifier: Modifier, text: String, color: Color) {
                 text = text,
                 style = TextStyle(
                     fontSize = MaterialTheme.typography.bodyLarge.fontSize,
-                    fontWeight = FontWeight.Bold, // 或 FontWeight.ExtraBold
+                    fontWeight = FontWeight.Bold, 
                     lineHeight = MaterialTheme.typography.bodyLarge.lineHeight,
-                    fontFamily = FontFamily.SansSerif // 使用支持粗体的字体，例如 Roboto
+                    fontFamily = FontFamily.SansSerif 
                 ),
                 color = color
             )
