@@ -68,7 +68,6 @@ class HardwareInfo{
             val voltageNowString = reader.readLine()
             reader.close()
 
-            // 检查进程退出码，确保命令执行成功
             if (process.waitFor() == 0 && voltageNowString != null) {
                 val voltageNow = voltageNowString.toInt() / 1000.0f
                 "$voltageNow mA"
@@ -90,13 +89,11 @@ class HardwareInfo{
 
     fun getBatteryVoltageNow(): String {
         return try {
-            // 执行 'su' 命令以获得 root 权限，并读取电池电压
             val process = Runtime.getRuntime().exec(arrayOf("su", "-c", "cat /sys/class/power_supply/battery/voltage_now"))
             val reader = BufferedReader(InputStreamReader(process.inputStream))
             val voltageNowString = reader.readLine()
             reader.close()
 
-            // 检查进程退出码，确保命令执行成功
             if (process.waitFor() == 0 && voltageNowString != null) {
                 val voltageNow = voltageNowString.toInt() / 1000.0f
                 "$voltageNow mV"
@@ -116,10 +113,8 @@ class HardwareInfo{
     }
 
 
-    // 获取电池功率
     fun getBatteryPowerNow(): String {
         return try {
-            // 使用Root权限读取 uevent
             val process = Runtime.getRuntime().exec(arrayOf("su", "-c", "cat /sys/class/power_supply/battery/uevent"))
             val reader = BufferedReader(InputStreamReader(process.inputStream))
             val output = reader.readText()
