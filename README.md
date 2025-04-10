@@ -70,4 +70,4 @@ xp模块，用于美化状态栏(自测Flyme 11.2.1.0A完美运行)
 
 打开你想要的功能的开关，**长按**右下角的按钮(需要给root)
 
-![show](./art/show.png)
+![show](./art/shows.png)
